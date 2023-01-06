@@ -1,4 +1,6 @@
 import { useRouter } from 'next/router'
+import { REGISTER_CALENDAR, USERS } from '../../routes'
+
 import { AxiosError } from 'axios'
 
 import { Button, Heading, MultiStep, Text, TextInput } from '@ignite-ui/react'
@@ -31,7 +33,8 @@ export default function Register() {
 
   async function handleRegister({ name, username }: RegisterFormData) {
     try {
-      await api.post('/users', { name, username })
+      await api.post(USERS, { name, username })
+      await router.push(REGISTER_CALENDAR)
     } catch (err) {
       if (err instanceof AxiosError && err?.response?.data.message) {
         alert(err?.response.data.message)

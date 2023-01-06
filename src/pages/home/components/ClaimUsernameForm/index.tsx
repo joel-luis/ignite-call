@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { REGISTER_USERNAME } from '../../../../routes'
 
 import { Button, Text, TextInput } from '@ignite-ui/react'
 import { ArrowRight } from 'phosphor-react'
@@ -22,7 +23,7 @@ export function ClaimUsernameForm() {
   async function handleClaimUsername(data: ClaimUsernameFormData) {
     const { username } = data
 
-    await router.push(`/register?username=${username}`)
+    await router.push(REGISTER_USERNAME(username))
   }
 
   return (
