@@ -1,6 +1,8 @@
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getWeekDays } from '../../../utils/get-week-days'
+import { api } from '../../../lib/axios'
+
 import {
   Button,
   Checkbox,
@@ -50,10 +52,13 @@ export default function TimeIntervals() {
 
   const watchIntervals = watch('intervals')
 
-  async function handleSetTimeIntervals(data: TimeIntervalsFormOutput) {
-    console.log(data)
-  }
+  async function handleSetTimeIntervals(data: any) {
+    const { intervals } = data as TimeIntervalsFormOutput
 
+    await api.post('/users/time-intervals', {
+      intervals,
+    })
+  }
   return (
     <Container>
       <Header>
@@ -65,10 +70,7 @@ export default function TimeIntervals() {
         <MultiStep size={4} currentStep={3} />
       </Header>
 
-      <IntervalBox
-        as="form"
-        onSubmit={handleSubmit(handleSetTimeIntervals as any)}
-      >
+      <IntervalBox as="form" onSubmit={handleSubmit(handleSetTimeIntervals)}>
         <IntervalsContainer>
           {fields.map((field, index) => (
             <IntervalItem key={field.id}>
@@ -85,7 +87,7 @@ export default function TimeIntervals() {
                     />
                   )}
                 />
-                <Text>{weekDays[field.weekday]}</Text>
+                <Text>{weekDays[field.weekDay]}</Text>
               </IntervalDay>
               <IntervalInputs>
                 <TextInput
