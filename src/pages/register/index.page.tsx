@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { REGISTER_CALENDAR, USERS } from '../../routes'
+import { CONNECT_CALENDAR, USERS } from '../../routes'
 
 import { AxiosError } from 'axios'
 
@@ -34,7 +34,7 @@ export default function Register() {
   async function handleRegister({ name, username }: RegisterFormData) {
     try {
       await api.post(USERS, { name, username })
-      await router.push(REGISTER_CALENDAR)
+      await router.push(CONNECT_CALENDAR)
     } catch (err) {
       if (err instanceof AxiosError && err?.response?.data.message) {
         alert(err?.response.data.message)
